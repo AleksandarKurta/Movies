@@ -1,0 +1,11 @@
+<div class="movies">
+  <ng-container *ngFor="let movie of movies">
+    <mat-card class="movie-card">
+      <img mat-card-image src="{{ movie.imgSrc }}" alt="Photo of a Shiba Inu" />
+      <mat-card-content class="movie-card-content">
+        <p>{{ movie.title }}</p>
+        <p>{{ movie.releaseDate }}</p></mat-card-content
+      >
+    </mat-card>
+  </ng-container>
+</div>
