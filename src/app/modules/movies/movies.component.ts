@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { endpoints } from '../../endpoints/endpoints';
 import { MovieInterface } from '../../types/movies/movie.interface';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as MovieAction from '../../store/movies/actions';
+import { statusSelector, moviesSelector } from 'src/app/store/movies/selectors';
+import { AppStateInterface } from 'src/app/types/appState.interface';
+
 
 @Component({
   selector: 'app-movies',
@@ -10,26 +13,18 @@ import { MovieInterface } from '../../types/movies/movie.interface';
   styleUrls: ['./movies.component.scss'],
 })
 export class MoviesComponent implements OnInit {
-  public movies: Array<MovieInterface> = [];
   public movieBackdropPath: string = '';
-  constructor(private http: HttpClient) {}
+  public status$: Observable<string>;
+  public movies$: Observable<MovieInterface[]>;
+
+  constructor(
+    private store: Store<AppStateInterface>,
+  ) {
+    this.status$ = this.store.pipe(select(statusSelector));
+    this.movies$ = this.store.pipe(select(moviesSelector));
+  }
 
   ngOnInit(): void {
-    const t = this.http
-      .get(endpoints.POPULAR)
-      .pipe(
-        map((data: any) => {
-          return data.results.map((item: any) => {
-            return {
-              title: item.title,
-              imgSrc: `https://www.themoviedb.org/t/p/w220_and_h330_face${item.backdrop_path}`,
-              releaseDate: item.release_date,
-            };
-          });
-        })
-      )
-      .subscribe((movies: Array<MovieInterface>) => {
-        this.movies = movies;
-      });
+    this.store.dispatch(MovieAction.getMovies());
   }
 }

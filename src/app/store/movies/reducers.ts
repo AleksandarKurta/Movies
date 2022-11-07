@@ -13,5 +13,15 @@ export const reducers = createReducer(
   on(MovieActions.getMovies, (state) => ({
     ...state,
     status: 'loading',
+  })),
+  on(MovieActions.getMoviesSuccess, (state, action) => ({
+    ...state,
+    movies: action.movies,
+    status: 'success',
+  })),
+  on(MovieActions.getMoviesFailure, (state, action) => ({
+    ...state,
+    error: action.error,
+    status: 'error'
   }))
 );
