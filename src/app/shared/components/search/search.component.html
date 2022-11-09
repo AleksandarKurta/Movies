@@ -1,1 +1,11 @@
-<p>search works!</p>
+<mat-form-field class="mat-search">
+  <span matPrefix> </span>
+  <input
+    type="tel"
+    matInput
+    placeholder="Search..."
+    name="search"
+    (keyup)="onSearch($event)"
+    [(ngModel)]="searchQuery"
+  />
+</mat-form-field>

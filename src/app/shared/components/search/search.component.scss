@@ -1,0 +1,10 @@
+.mat-search {
+  width: 450px;
+  margin-top: 15px;
+
+  &::ng-deep .mat-form-field-flex {
+    padding: 0 10px;
+    background-color: #fff;
+    color: #2e2e2e;
+  }
+}

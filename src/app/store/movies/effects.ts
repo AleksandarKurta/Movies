@@ -6,19 +6,41 @@ import { catchError, map, mergeMap, of } from 'rxjs';
 
 @Injectable()
 export class MoviesEffects {
-
-  constructor(private actions$: Actions, private movieService: MoviesService) {};
+  constructor(private actions$: Actions, private movieService: MoviesService) {}
 
   getMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MoviesActions.getMovies),
-      mergeMap(() => {
-        return this.movieService.getMoviesList().pipe(
-          map((movies) => MoviesActions.getMoviesSuccess({ movies })),
+      mergeMap((data) => {
+        return this.movieService.getMoviesList(data.page, data.category).pipe(
+          map((movies: any) => {
+            return MoviesActions.getMoviesSuccess({
+              movies: movies,
+              scroll: data.scroll,
+            });
+          }),
           catchError((error) =>
             of(MoviesActions.getMoviesFailure({ error: error.message }))
           )
-        )
+        );
+      })
+    )
+  );
+
+  searchMovies = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MoviesActions.searchMovies),
+      mergeMap((data) => {
+        return this.movieService.searchMovies(data.query).pipe(
+          map((movies: any) => {
+            return MoviesActions.searchMoviesSuccess({
+              movies: movies,
+            });
+          }),
+          catchError((error) =>
+            of(MoviesActions.getMoviesFailure({ error: error.message }))
+          )
+        );
       })
     )
   );

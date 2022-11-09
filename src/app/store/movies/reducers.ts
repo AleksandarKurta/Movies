@@ -16,12 +16,21 @@ export const reducers = createReducer(
   })),
   on(MovieActions.getMoviesSuccess, (state, action) => ({
     ...state,
-    movies: action.movies,
+    movies: action.scroll ? [...state.movies, ...action.movies] : action.movies,
     status: 'success',
   })),
   on(MovieActions.getMoviesFailure, (state, action) => ({
     ...state,
     error: action.error,
-    status: 'error'
+    status: 'error',
+  })),
+  on(MovieActions.searchMovies, (state) => ({
+    ...state,
+    status: 'loading',
+  })),
+  on(MovieActions.searchMoviesSuccess, (state, action) => ({
+    ...state,
+    movies: action.movies,
+    status: 'success',
   }))
 );

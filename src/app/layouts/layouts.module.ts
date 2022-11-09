@@ -10,9 +10,19 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from '../store/movies/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { MoviesEffects } from '../store/movies/effects';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MovieDetailsComponent } from '../modules/movie-details/movie-details.component';
+import { MovieCategoriesComponent } from '../modules/movie-categories/movie-categories.component';
 
 @NgModule({
-  declarations: [DefaultComponent, MoviesComponent],
+  declarations: [
+    DefaultComponent,
+    MoviesComponent,
+    MovieCategoriesComponent,
+    MovieDetailsComponent,
+  ],
   imports: [
     CommonModule,
     SharedModule,
@@ -21,6 +31,9 @@ import { MoviesEffects } from '../store/movies/effects';
     MatButtonModule,
     StoreModule.forFeature('movies', reducers),
     EffectsModule.forFeature([MoviesEffects]),
+    InfiniteScrollModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
   ],
 })
 export class LayoutsModule {}
