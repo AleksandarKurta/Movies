@@ -1,0 +1,12 @@
+<div class="container-heading">
+  <mat-form-field appearance="fill">
+    <mat-label>{{ activeCategory }}</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let category of categories" [value]="category.value">
+        <a routerLink="/{{ category.value }}">
+          {{ category.label }}
+        </a>
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

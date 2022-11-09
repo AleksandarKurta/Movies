@@ -1,11 +1,35 @@
-<div class="movies">
-  <ng-container *ngFor="let movie of movies$ | async">
-    <mat-card class="movie-card">
-      <img mat-card-image src="{{ movie.imgSrc }}" alt="Photo of a Shiba Inu" />
-      <mat-card-content class="movie-card-content">
-        <p>{{ movie.title }}</p>
-        <p>{{ movie.releaseDate }}</p></mat-card-content
-      >
-    </mat-card>
-  </ng-container>
+<div *ngIf="status !== 'success'" class="spinner">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div class="container">
+  <app-movie-categories></app-movie-categories>
+  <div
+    class="search-results"
+    infiniteScroll
+    [infiniteScrollDistance]="0"
+    [infiniteScrollThrottle]="50"
+    (scrolled)="onScroll()"
+  >
+    <div *ngIf="movies.length; else emptyMovies" class="movies">
+      <div *ngFor="let movie of movies">
+        <a routerLink="/movie/{{ movie.id }}">
+          <mat-card class="movie-card">
+            <img
+              mat-card-image
+              src="{{ movie.imgSrc }}"
+              alt="{{ movie.title }}"
+            />
+            <mat-card-content>
+              <h3>{{ movie.title }}</h3>
+              <p>{{ movie.releaseDate | date }}</p>
+            </mat-card-content>
+          </mat-card>
+        </a>
+      </div>
+    </div>
+    <ng-template #emptyMovies>
+      <h3 class="empty-movies">No movies found!</h3>
+    </ng-template>
+  </div>
 </div>

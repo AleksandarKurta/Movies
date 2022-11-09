@@ -1,0 +1,18 @@
+.container-heading {
+  background-color: #222;
+  padding: 20px 20px 0 20px;
+  margin-bottom: 20px;
+  border-radius: 3px;
+
+  ::ng-deep .mat-form-field-flex {
+    background-color: #fff;
+  }
+}
+
+::ng-deep .mat-option-text {
+  a {
+    display: block;
+    text-decoration: none;
+    color: #2e2e2e;
+  }
+}
