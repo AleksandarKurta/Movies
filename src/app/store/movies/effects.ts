@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { MoviesService } from 'src/app/services/movies.service';
 import * as MoviesActions from './actions';
 import { catchError, map, mergeMap, of } from 'rxjs';
+import { MoviesService } from 'src/app/services/movies/movies.service';
 
 @Injectable()
 export class MoviesEffects {
-  constructor(private actions$: Actions, private movieService: MoviesService) {}
+  constructor(
+    private actions$: Actions,
+    private moviesService: MoviesService
+  ) {}
 
   getMovies$ = createEffect(() =>
     this.actions$.pipe(
       ofType(MoviesActions.getMovies),
-      mergeMap((data) => {
-        return this.movieService.getMoviesList(data.page, data.category).pipe(
+      mergeMap(({ page, category, scroll }) => {
+        return this.moviesService.getMoviesList(page, category).pipe(
           map((movies: any) => {
             return MoviesActions.getMoviesSuccess({
               movies: movies,
-              scroll: data.scroll,
+              scroll: scroll,
             });
           }),
           catchError((error) =>
@@ -30,11 +33,12 @@ export class MoviesEffects {
   searchMovies = createEffect(() =>
     this.actions$.pipe(
       ofType(MoviesActions.searchMovies),
-      mergeMap((data) => {
-        return this.movieService.searchMovies(data.query).pipe(
+      mergeMap(({ query, page, scroll }) => {
+        return this.moviesService.searchMovies(query, page).pipe(
           map((movies: any) => {
             return MoviesActions.searchMoviesSuccess({
               movies: movies,
+              scroll: scroll,
             });
           }),
           catchError((error) =>

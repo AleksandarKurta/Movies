@@ -2,5 +2,13 @@
   <nav>
     <div class="nav-menu"></div>
     <app-search></app-search>
+    <div *ngIf="!session; else sessionFalse">
+      <button mat-raised-button (click)="openLoginDialog()">Login</button>
+    </div>
+    <ng-template #sessionFalse>
+      <button mat-raised-button color="warn" (click)="openLogoutDialog()">
+        Logout
+      </button></ng-template
+    >
   </nav>
 </div>

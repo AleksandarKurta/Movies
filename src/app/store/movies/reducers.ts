@@ -30,7 +30,7 @@ export const reducers = createReducer(
   })),
   on(MovieActions.searchMoviesSuccess, (state, action) => ({
     ...state,
-    movies: action.movies,
+    movies: action.scroll ? [...state.movies, ...action.movies] : action.movies,
     status: 'success',
   }))
 );

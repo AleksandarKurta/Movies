@@ -1,1 +1,53 @@
-<p>movie-details works!</p>
+<div>
+  <div *ngIf="!movie; else movieIsLoaded" class="movie-details-spinner">
+    <mat-spinner></mat-spinner>
+  </div>
+
+  <ng-template #movieIsLoaded>
+    <div class="movie-details-contaner" [ngStyle]="bgImg()">
+      <div class="container-bg">
+        <div class="container">
+          <div class="movie-details">
+            <div class="movie-details-image">
+              <img
+                src="https://www.themoviedb.org/t/p/w300_and_h450_bestv2/{{
+                  movie.poster_path
+                }}"
+                alt=""
+              />
+            </div>
+            <div class="movie-details-content">
+              <h1>{{ movie.title }}</h1>
+              <p class="movie-details-content-info">
+                {{ movie.release_date | date: "dd/MM/yyyy" }} &#x2022;
+                {{ genres.join(", ") }} &#x2022; {{ movie.runtime }}m
+              </p>
+
+              <app-user-score
+                [voteAverage]="movie.vote_average"
+              ></app-user-score>
+
+              <div class="overview">
+                <h3>Overview</h3>
+                <p>{{ movie.overview }}</p>
+              </div>
+
+              <div *ngIf="session" class="rating">
+                <app-rating
+                  [rating]="rating"
+                  [starCount]="starCount"
+                  [color]="starColor"
+                  (ratingUpdated)="onRatingChanged($event)"
+                ></app-rating>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<app-movie-actors [movieId]="movieId"></app-movie-actors>
+
+<app-similar-movies [movieId]="movieId"></app-similar-movies>

@@ -3,7 +3,7 @@ import { MovieInterface } from '../../types/movies/movie.interface';
 import { select, Store } from '@ngrx/store';
 import * as MovieAction from '../../store/movies/actions';
 import { statusSelector, moviesSelector } from 'src/app/store/movies/selectors';
-import { AppStateInterface } from 'src/app/types/appState.interface';
+import { AppStateInterface } from 'src/app/types/state/appState.interface';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SearchService } from 'src/app/services/search/search.service';
 import { Subscription } from 'rxjs';
@@ -62,10 +62,15 @@ export class MoviesComponent implements OnInit {
   onScroll(): void {
     this.page++;
     this.scroll = true;
-    this.getMovies();
+    if (this.query) {
+      this.searchMovies();
+    }
+    if (!this.query) {
+      this.getMovies();
+    }
   }
 
-  getMovies() {
+  getMovies(): void {
     this.store.dispatch(
       MovieAction.getMovies({
         page: this.page,
@@ -75,10 +80,12 @@ export class MoviesComponent implements OnInit {
     );
   }
 
-  searchMovies() {
+  searchMovies(): void {
     this.store.dispatch(
       MovieAction.searchMovies({
         query: this.query,
+        page: this.page,
+        scroll: this.scroll,
       })
     );
   }

@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="actors-content">
+    <h3 class="actors-heading">Similar Movies</h3>
+    <div class="movie-actors">
+      <div *ngFor="let similarMovie of similarMovies">
+        <mat-card class="movie-card">
+          <img
+            mat-card-image
+            [src]="similarMovieImage(similarMovie.poster_path)"
+          />
+          <mat-card-content>
+            <h3>{{ similarMovie.title | truncateText: 24 }}</h3>
+            <p>{{ similarMovie.release_date | date }}</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

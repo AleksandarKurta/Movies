@@ -10,7 +10,7 @@ import { SearchService } from 'src/app/services/search/search.service';
   styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-  public subject = new Subject();
+  public subject: Subject<any> = new Subject();
   public searchQuery: string = '';
 
   constructor(private router: Router, private searchService: SearchService) {}
@@ -36,7 +36,7 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  onSearch($event: any) {
+  onSearch($event: any): void {
     this.subject.next($event.target.value);
   }
 }

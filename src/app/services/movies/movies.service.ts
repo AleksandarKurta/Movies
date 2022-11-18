@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { endpoints } from '../endpoints/endpoints';
 import { map } from 'rxjs/operators';
+import { endpoints } from 'src/app/endpoints/endpoints';
 import { Observable } from 'rxjs';
+import { APIResponse } from 'src/app/types/api/api-response.interface';
+import { MovieInterface } from 'src/app/types/movies/movie.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +23,10 @@ export class MoviesService {
     }
   }
 
-  getMoviesList(page: number, category: string) {
+  getMoviesList(
+    page: number,
+    category: string
+  ): Observable<APIResponse<MovieInterface>> {
     const endpoint = this.findEndpoint(page, category);
 
     return this.http.get(endpoint).pipe(
@@ -30,7 +35,9 @@ export class MoviesService {
           return {
             id: item.id,
             title: item.title,
-            imgSrc: `https://www.themoviedb.org/t/p/w220_and_h330_face${item.backdrop_path}`,
+            imgSrc: item.poster_path
+              ? `https://www.themoviedb.org/t/p/w220_and_h330_face${item.poster_path}`
+              : 'https://winnipegmetroregion.ca/static/img/default_notfound_img.jpg',
             releaseDate: item.release_date,
           };
         });
@@ -38,21 +45,21 @@ export class MoviesService {
     );
   }
 
-  searchMovies(query: string) {
+  searchMovies(query: string, page: number): Observable<Object> {
     return this.http
-      .get(endpoints.SEARCH, {
+      .get(`${endpoints.SEARCH}?page=${page}`, {
         params: {
           query,
         },
       })
       .pipe(
         map((data: any) => {
-          console.log('data', data);
           return data.results.map((item: any) => {
             return {
+              id: item.id,
               title: item.title,
-              imgSrc: item.backdrop_path
-                ? `https://www.themoviedb.org/t/p/w220_and_h330_face${item.backdrop_path}`
+              imgSrc: item.poster_path
+                ? `https://www.themoviedb.org/t/p/w220_and_h330_face${item.poster_path}`
                 : 'https://winnipegmetroregion.ca/static/img/default_notfound_img.jpg',
               releaseDate: item.release_date,
             };

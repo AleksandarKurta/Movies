@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
-interface CategoryInterface {
-  label: string;
-  value: string;
-}
+import { CategoryInterface } from 'src/app/types/category/category.interface';
 
 @Component({
   selector: 'app-movie-categories',

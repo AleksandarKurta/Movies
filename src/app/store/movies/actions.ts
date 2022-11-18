@@ -18,10 +18,10 @@ export const getMoviesFailure = createAction(
 
 export const searchMovies = createAction(
   '[Movies] Search Movies',
-  props<{ query: string }>()
+  props<{ query: string; page: number; scroll: boolean }>()
 );
 
 export const searchMoviesSuccess = createAction(
   '[Movies] Search Movies success',
-  props<{ movies: MovieInterface[] }>()
+  props<{ movies: MovieInterface[]; scroll: boolean }>()
 );

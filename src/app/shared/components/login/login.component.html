@@ -1,0 +1,22 @@
+<div class="login-dialog">
+  <form [formGroup]="profileForm" (ngSubmit)="login()">
+    <h3>Login to your account</h3>
+    <mat-form-field appearance="fill" class="username-form-field">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill" class="password-form-field">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" required />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      type="submit"
+      color="primary"
+      [disabled]="!profileForm.valid"
+    >
+      Login
+    </button>
+  </form>
+</div>

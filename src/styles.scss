@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 
 html,
 body {
@@ -9,4 +10,60 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background-color: #333;
   color: #fff;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  padding: 50px 0;
+}
+
+.spinner {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.actors-content {
+  .actors-heading {
+    font-size: 28px;
+    margin-bottom: 0;
+  }
+
+  .movie-actors {
+    display: flex;
+    overflow: auto;
+    margin-top: 20px;
+    border-radius: 5px;
+    background: linear-gradient(#444444, #333);
+
+    .movie-card {
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 10px 10px 10px rgba($color: #000000, $alpha: 0.6);
+      min-width: 150px;
+      margin: 50px 20px;
+      height: 320px;
+
+      .mat-card-content {
+        h3 {
+          font-size: 20px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  ::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+    border: none;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
